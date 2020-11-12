@@ -89,11 +89,12 @@ void updateDHT() {
   float newH = dht.readHumidity();
 //  Serial.print(newT);
 //  Serial.print(newH);
-  if (!isnan(newT)) {
+  if (!isnan(newT) && !isnan(newH)) {
     Blynk.virtualWrite(VPIN_TEMP, newT);
-  }
-  if (!isnan(newH)) {
     Blynk.virtualWrite(VPIN_HUMID, newH);
+  } else {
+    timer.setTimeout(5000, updateDHT);
   }
+
 
 }
